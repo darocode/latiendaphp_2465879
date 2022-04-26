@@ -23,3 +23,42 @@ Route::get('/', function () {
 Route::get('hola',function(){
     echo "Hola, mundo PHP";
 });
+
+Route::get('paises', function(){
+    $paises=[
+        "Colombia"=>[
+            "capital"=>"Bogota",
+            "moneda"=>"peso",
+            "poblacion"=>51.6,
+            "ciudades"=>[
+                "Medellin",
+                "Cali",
+                "Barranquilla"
+            ]
+        ] ,
+        "Peru"=> [
+            "capital"=>"Lima",
+            "moneda"=>"sol",
+            "poblacion"=>32.9,
+            "ciudades"=>[
+                "Trujillo",
+                "Cusco",
+                "Arequipa"
+            ]
+        ],
+        "Paraguay"=> [
+            "capital"=>"Asuncion",
+            "moneda"=>"Guarani paraguayo",
+            "poblacion"=>7.1,
+            "ciudades"=>[
+                "Capiata",
+                "Limpio",
+                "Cazapa"
+            ]
+        ]
+    ];
+
+    //mostrar la vista de paises
+    return view('paises')
+                ->with("paises", $paises);
+});
