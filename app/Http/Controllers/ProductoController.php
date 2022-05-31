@@ -47,13 +47,15 @@ class ProductoController extends Controller
      */
     public function store(Request $r)
     {
+
         //Definir Reglas de Validacion
         $reglas = [
-            "nombre" => 'required|alpha',
+            "nombre" => 'required|alpha|unique:productos,nombre',
             "desc" => 'required|min:3|max:10',
             "precio" => 'required|numeric',
-            "marca"=>'required',
-            "categoria"=>'required'
+            "marca" => 'required',
+            "categoria" => 'required',
+            "imagen" => 'required|image'
 
         ];
         //Mensajes personalizados por regla
@@ -61,7 +63,8 @@ class ProductoController extends Controller
             "required" => "Campo Obligatorio",
             "numeric" => "Solo se permiten Numeros",
             "alpha" => "Solo se permiten letras",
-            
+            "image" => "tipo de archivo no valida -- cosa no va",
+
         ];
 
 
@@ -77,6 +80,19 @@ class ProductoController extends Controller
                 ->withInput();
         } else {
 
+            //analizar el objeto file del request
+            //asignar el nombre de la variable segun el archivo
+
+
+
+
+            $nombre_Archivo =  $r->imagen->getClientOriginalName();
+            $archivo = $r->imagen;
+
+            //MOVER EL ARCHIVO A LA CARPETA PUBLIC
+            // var_dump(public_path());
+            $ruta = public_path() . '/img';
+            $archivo->move($ruta, $nombre_Archivo);
             //Validacion Correcta
             //crear entidad producto
 
@@ -87,6 +103,8 @@ class ProductoController extends Controller
             $p->precio = $r->precio;
             $p->marca_id = $r->marca;
             $p->categoria_id = $r->categoria;
+            $p->image = $nombre_Archivo;
+
 
             //Grabar el nuevo producto
             $p->save();
@@ -97,6 +115,7 @@ class ProductoController extends Controller
                 ->with('mensaje', 'Producto registrado');
         }
     }
+
 
     /**
      * Display the specified resource.
