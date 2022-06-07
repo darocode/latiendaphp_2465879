@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +71,14 @@ Route::get('prueba', function(){
     return view('productos.new');
             
 });
+
+Route::resource('productos',
+                    ProductoController::class);
+
+Route::resource('cart',
+                    CartController::class,
+                        ['only' =>['store','destroy','index']
+                                        ]);                    
 
 //Rutas REST
 

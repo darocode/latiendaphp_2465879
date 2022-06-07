@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers;  
 //Dependencias
 use App\Models\Producto;
 use App\Models\Categoria;
@@ -18,7 +18,12 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        echo "Pronto existira un Catalogo de Productos";
+        //Seleccion de Todos los productos
+        $productos = Producto::all();
+        //Mostrar la vista del catalogo
+        //LLevando la lista de productos
+        return view ('productos.index')
+            ->with('productos', $productos);
     }
 
     /**
@@ -125,7 +130,13 @@ class ProductoController extends Controller
      */
     public function show($producto)
     {
-        echo "Espacio para la informacion del producto con el ID es: $producto";
+        //echo "Espacio para la informacion del producto con el ID es: $producto";
+        //Seleccionar el producto con id especifico
+        $producto = Producto::find($producto);
+        //Mostrar vista de detalles
+        //llevando el producto seleccionado
+        return view('productos.details')
+            ->with('producto',$producto);
     }
 
     /**
